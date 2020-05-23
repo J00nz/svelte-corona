@@ -1,0 +1,14 @@
+{
+  "version": 3,
+  "file": "bundle.css",
+  "sources": [
+    "../../App.svelte",
+    "../../Popup.svelte"
+  ],
+  "sourcesContent": [
+    "<script>\n\timport { Countries } from './store'\n\timport Popup from './Popup.svelte'\n\n\tlet selected = null\n\n\tconst onClick = (country) => {\n\t\treturn () => selected = country\n\t}\n\n\tconst onClose = () => {\n\t\tselected = false\n\t}\n</script>\n\n<style>\n\t.country {\n\t\tcursor: pointer; \n\t}\n</style>\n\n<div>\n\t{#each $Countries as country }\n\t\t<div>\n\t\t\t<span class=\"country\" on:click={onClick(country)}>\n\t\t\t\t<span>\n\t\t\t\t\t{country.Country}\n\t\t\t\t</span>\n\t\t\t\t<span>\n\t\t\t\t\tConfirmed: {country.TotalConfirmed}\n\t\t\t\t</span>\n\t\t\t\t<span>\n\t\t\t\t\tDead: {country.TotalDeaths}\n\t\t\t\t</span>\n\t\t\t</span>\n\t\t</div>\n\t{/each}\n</div>\n\n{#if selected}\n\t<Popup {...{ onClose, country: selected }} />\n{/if}\n",
+    "<script>\n  import { fade } from 'svelte/transition'\n  \n  export let country\n  export let onClose\n</script>\n\n<style>\n\t.overlay {\n\t\tbackground-color: rgba(0, 0, 0, 0.5);\n\t\tposition: fixed;\n\t\ttop: 0;\n\t\tleft: 0;\n\t\twidth: 100vw;\n\t\theight: 100vh;\n\t}\n\t.popup {\n\t\tposition: fixed;\n\t\ttop:0;\n\t\ttop: 50%;\n\t\tleft: 50%;\n\t\ttransform: translate(-50%, -50%);\n\t\tdisplay: block;\n\t\tbackground-color: #fff;\n\t\tpadding: 2em;\n\t}\n\t.popup .close {\n\t\tposition: absolute;\n\t\ttop: 0;\n\t\tright: 0;\n\t\tbackground-color: #000;\n\t\tcolor: #fff;\n\t\tborder-radius: 50%;\n\t\twidth: 1em;\n\t\theight: 1em;\n\t\ttext-align: center;\n    cursor: pointer;\n\t}\n</style>\n\n<div class=\"overlay\" on:click={onClose} />\n<div class=\"popup\" in:fade>\n  <h1>{country.Country}</h1>\n  <div>\n    <span>\n      Confirmed: {country.TotalConfirmed}\n    </span>\n    <span>\n      Dead: {country.TotalDeaths}\n    </span>\n  </div>\n  <div>\n    <span>\n      Recovered: {country.TotalRecovered}\n    </span>\n    <span>\n      Mortality: {((country.TotalDeaths / country.TotalRecovered) * 50).toFixed(2)}%\n    </span>\n  </div>\n  <div class=\"close\" on:click={onClose}>X</div>\n</div>"
+  ],
+  "names": [],
+  "mappings": "AAgBC,QAAQ,cAAC,CAAC,AACT,MAAM,CAAE,OAAO,AAChB,CAAC;ACVD,QAAQ,4BAAC,CAAC,AACT,gBAAgB,CAAE,KAAK,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,GAAG,CAAC,CACpC,QAAQ,CAAE,KAAK,CACf,GAAG,CAAE,CAAC,CACN,IAAI,CAAE,CAAC,CACP,KAAK,CAAE,KAAK,CACZ,MAAM,CAAE,KAAK,AACd,CAAC,AACD,MAAM,4BAAC,CAAC,AACP,QAAQ,CAAE,KAAK,CACf,IAAI,CAAC,CACL,GAAG,CAAE,GAAG,CACR,IAAI,CAAE,GAAG,CACT,SAAS,CAAE,UAAU,IAAI,CAAC,CAAC,IAAI,CAAC,CAChC,OAAO,CAAE,KAAK,CACd,gBAAgB,CAAE,IAAI,CACtB,OAAO,CAAE,GAAG,AACb,CAAC,AACD,oBAAM,CAAC,MAAM,cAAC,CAAC,AACd,QAAQ,CAAE,QAAQ,CAClB,GAAG,CAAE,CAAC,CACN,KAAK,CAAE,CAAC,CACR,gBAAgB,CAAE,IAAI,CACtB,KAAK,CAAE,IAAI,CACX,aAAa,CAAE,GAAG,CAClB,KAAK,CAAE,GAAG,CACV,MAAM,CAAE,GAAG,CACX,UAAU,CAAE,MAAM,CAChB,MAAM,CAAE,OAAO,AAClB,CAAC"
+}
